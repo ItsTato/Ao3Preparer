@@ -1,4 +1,5 @@
 /__pycache__
 /.v
-input.txt
-output.html
+/.vscode
+*.txt
+*.html
