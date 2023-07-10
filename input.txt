@@ -1,3 +1,0 @@
-*Sample italics/*
-~~Hello!/~~
-**Halo!/**
