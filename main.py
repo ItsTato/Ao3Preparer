@@ -1,10 +1,11 @@
+import string, random
 from os import path
 from sys import exit
 from json import load
 
 iExists:bool = False
 oExists:bool = False
-oOverWrite:bool = False
+oOverwrite:bool = False
 scExists:bool = False
 specialChars:dict = {}
 
@@ -29,13 +30,20 @@ oExists = path.exists("./output.html")
 if oExists:
 	val:str = input("\"output.html\" is already present.\n> Overwrite? [Yes/No] (No) ")
 	if val.lower() in ["","n","no"]:
-		oOverWrite = False
+		oOverwrite = False
 	else:
-		oOverWrite = True
+		oOverwrite = True
 
 with open("./input.txt","r") as file:
 	data:list = file.readlines()
 	file.close()
+
+def genId() -> str:
+	"""
+	Generate a short unique id.
+	"""
+	chars:str = string.ascii_lowercase + string.digits
+	return "".join(random.choice(chars) for x in range(6))
 
 def cleanseLines(lines:list) -> list:
 	"""
@@ -79,6 +87,15 @@ cleansed:list = cleanseLines(data)
 specialSignReady:list = replaceSpecialSigns(cleansed)
 forFile:str = listToString(specialSignReady)
 
-with open("./output.html","w+") as file:
-	file.write(forFile)
-	file.close()
+if oOverwrite == True:
+	with open("./output.html","w+") as file:
+		file.write(forFile)
+		file.close()
+elif not oExists:
+	with open("./output.html","w+") as file:
+		file.write(forFile)
+		file.close()
+else:
+	with open(f"./output-{genId()}.html","w+") as file:
+		file.write(forFile)
+		file.close()
