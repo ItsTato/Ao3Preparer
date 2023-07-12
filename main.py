@@ -3,19 +3,16 @@ from os import path
 from sys import exit
 from json import load
 
-iExists:bool = False
-oExists:bool = False
 oOverwrite:bool = False
-scExists:bool = False
 specialChars:dict = {}
 
-iExists = path.exists("./input.txt")
+iExists:bool = path.exists("./input.txt")
 
 if not iExists:
 	print("Must have 1 input file called \"input.txt\"")
 	exit()
 
-scExists = path.exists("./special-chars.json")
+scExists:bool = path.exists("./special-chars.json")
 
 if not scExists:
 	print("Missing critical configuration file \"special-chars.json\"!")
@@ -25,13 +22,11 @@ with open("./special-chars.json","r") as file:
 	specialChars:dict = load(file)
 	file.close()
 
-oExists = path.exists("./output.html")
+oExists:bool = path.exists("./output.html")
 
 if oExists:
 	val:str = input("\"output.html\" is already present.\n> Overwrite? [Yes/No] (No) ")
-	if val.lower() in ["","n","no"]:
-		oOverwrite = False
-	else:
+	if val.lower() in ["yes","ye","y"]:
 		oOverwrite = True
 
 with open("./input.txt","r") as file:
